@@ -8,6 +8,8 @@ class NowcoderDemoApplicationTests {
 
     @Test
     void contextLoads() {
+
+        System.out.println("contextLoads");
     }
 
 }
