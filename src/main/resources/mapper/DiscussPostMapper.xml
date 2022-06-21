@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.maloure.nowcoder.community.mapper.DiscussPostMapper">
+
+    <sql id="selectDiscussPosts">
+        id,user_id,title,content,type ,status,create_time,comment_count,score
+    </sql>
+
+<!--    分页查询-->
+    <select id="selectDiscussionPosts" resultType="com.maloure.nowcoder.community.entity.DiscussPost">
+
+    select <include refid="selectDiscussPosts"></include> from discuss_post
+    <where>
+        status != 2
+        <if test="arg0!=0">
+            and user_id = #{arg0}
+        </if>
+
+    </where>
+    order by type desc,create_time desc
+
+    limit #{arg1} , #{arg2}
+
+
+    </select>
+
+    <select id="selectDiscussPostRows" resultType="int">
+        select count(id) from discuss_post where status!=2
+        <if test="userId!=0">
+            and user_id = #{userId}
+        </if>
+    </select>
+
+
+
+</mapper>

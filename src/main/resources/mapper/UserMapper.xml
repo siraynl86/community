@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.maloure.nowcoder.community.mapper.UserMapper">
+
+    <sql id="UserFieldSql">
+        id,username,password,salt,email,type,status,activation_code,create_time
+    </sql>
+
+    <sql id="insertFieldSql">
+        username,password,salt,email,type,status,activation_code,create_time
+    </sql>
+
+    <select id="selectById" parameterType="int" resultType="com.maloure.nowcoder.community.entity.User">
+        select  <include refid="UserFieldSql"></include>  from user where id = #{id}
+    </select>
+
+    <select id="selectByName" parameterType="string" resultType="com.maloure.nowcoder.community.entity.User">
+        select  <include refid="UserFieldSql"></include>  from user where username = #{username}
+    </select>
+
+    <select id="selectByEmail" parameterType="string" resultType="com.maloure.nowcoder.community.entity.User">
+        select  <include refid="UserFieldSql"></include>  from user where email = #{email}
+    </select>
+
+    <insert id="insertUser" parameterType="com.maloure.nowcoder.community.entity.User" keyProperty="id" keyColumn="id">
+
+        insert into user(<include refid="insertFieldSql"></include>) values(
+                                  #{username},#{password},#{salt},#{email},#{type},#{status},#{activationCode},#{createTime})
+    </insert>
+
+
+    <update id="updateStatus">
+
+        update from user set status = #{arg1} where id = #{arg0}
+
+    </update>
+
+    <update id="updateHeader">
+
+        update from user set header_url = #{arg1} where id = #{arg0}
+
+    </update>
+
+    <update id="updatePassword">
+
+        update from user set password = #{arg1} where id = #{arg0}
+
+    </update>
+</mapper>
